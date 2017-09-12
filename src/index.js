@@ -14,8 +14,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 
-ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
-
+ReactDOM.render(
+  <Provider store={createStoreWithMiddleware(reducers)}>
     <App />
-</Provider>, document.getElementById('root'))
+  </Provider>, document.getElementById('root'))
 registerServiceWorker()
