@@ -1,11 +1,10 @@
-import React  from 'react'
+import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import * as actions from '../actions'
+import {fetchPosts, createPost, deletePost} from '../actions'
 import PostItem from './PostItem'
-import TextField from 'material-ui/TextField'
-import Button from 'material-ui/Button'
 import Grid from 'material-ui/Grid'
+import AddPostForm from './AddPostForm'
 
 class PostList extends React.Component {
   state = {post: ''}
@@ -32,26 +31,14 @@ class PostList extends React.Component {
 
   render () {
     return (
-      <Grid align="center" container spacing={24}>
+      <div>
         <Grid item xs={12}>
           <Grid container justify="center">
-            <h4>Create a Post</h4>
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Grid container justify="center">
-            <form onSubmit={this.handleFormSubmit.bind(this)} className="form-inline">
-              <div className="form-group">
-                <TextField
-                  placeholder="Add a post"
-                  value={this.state.post}
-                  onChange={this.handleInputChange.bind(this)}/>
-                <Button raised color="primary" type="submit">
-                  Create Post
-                </Button>
-              </div>
-            </form>
+            <AddPostForm
+              handleFormSubmit={this.handleFormSubmit.bind(this)}
+              handleInputChange={this.handleInputChange.bind(this)}
+              post={this.state.post}
+            />
           </Grid>
         </Grid>
 
@@ -62,7 +49,8 @@ class PostList extends React.Component {
             </ul>
           </Grid>
         </Grid>
-      </Grid>
+      </div>
+
     )
   }
 }
@@ -71,4 +59,12 @@ function mapStateToProps (state) {
   return {posts: state.posts}
 }
 
-export default connect(mapStateToProps, actions)(PostList)
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchPosts: fetchPosts,
+    createPost: createPost,
+    deletePost: deletePost
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList)
